@@ -1,0 +1,622 @@
+# Dragon Ball Z: The Legacy of Goku (USA, ALGE, revision 0).
+
+[game]
+name = "Dragon Ball Z: The Legacy of Goku"
+short_name = "dragon_ball_z_legacy_of_goku"
+
+[program]
+name = "Dragon Ball Z: The Legacy of Goku (USA)"
+id = "ALGE"
+load_address = 0x08000000
+size = 0x00800000
+entry_pc = 0x08000000
+speculative_literal_harvest = false
+aot_scan_start = 0x080000C0
+aot_scan_end = 0x08010000
+static_resume_all = true
+codegen_shards = 32
+
+[identity]
+sha1 = "a3c8c76742f11fc6a3f6e3fcca20992458cac0b5"
+md5 = "3100fc5a4427a7b0cc20b861134e60f2"
+
+[bios]
+path = "gbarecomp/bios/gba_bios.bin"
+sha1 = "300c20df6731a33952ded8c436f7f186d25d3492"
+hle = false
+
+[rom]
+path = "roms/dragon_ball_z_the_legacy_of_goku_usa.gba"
+sha1 = "a3c8c76742f11fc6a3f6e3fcca20992458cac0b5"
+
+[save]
+type = "eeprom"
+size = 8192
+path = "saves/dragon_ball_z_the_legacy_of_goku_usa.sav"
+
+[runtime]
+debug_port = 19887
+window_title = "DragonBallZLegacyOfGokuRecomp"
+
+[video]
+screen = "frontlit"
+view_width = 240
+resize_view = false
+
+[audio]
+shadow = false
+
+# The cartridge installs its ARM IRQ dispatcher verbatim in IWRAM. A frame-300
+# dump matched this exact 0x13C-byte span and diverged at the first following
+# byte.
+[[code_copy]]
+runtime_start = 0x03003BC0
+source_start = 0x08000138
+size = 0x0000013C
+name = "irq_dispatcher"
+note = "Exact live IWRAM/ROM match through offset 0x13B"
+
+# The sound engine's ARM mixer image is also copied verbatim. Its standalone
+# source and destination differ from the double-pack layout.
+[[code_copy]]
+runtime_start = 0x03003D44
+source_start = 0x08008814
+size = 0x0000024C
+name = "sound_mixer"
+note = "Exact live frame-300 IWRAM/ROM match through offset 0x24B"
+
+[[extra_func]]
+addr = 0x03003BC0
+source_addr = 0x08000138
+mode = "arm"
+note = "Copied IRQ dispatcher root"
+
+[[extra_func]]
+addr = 0x03003CD4
+source_addr = 0x0800024C
+mode = "arm"
+resume = true
+note = "Copied IRQ callback continuation after bx r0"
+
+[[extra_func]]
+addr = 0x03003CF0
+source_addr = 0x08000268
+mode = "thumb"
+note = "Thumb bx helper at the tail of the exact copied IRQ image"
+
+[[extra_func]]
+addr = 0x03003F48
+source_addr = 0x08008A18
+mode = "arm"
+note = "Copied ARM sound-mixer callback within the exact 0x24C-byte image"
+
+# The audio driver calls this complete leaf island through a signed-offset
+# callback table interpreted by the ARM thunk at 0x0800E4BE. Each entry below
+# was reached in the frame-300 bring-up and audited against the ROM's
+# literal-load/store or bx-lr leaf boundaries.
+[[extra_func]]
+addr = 0x0800EC80
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800EC90
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800ECA0
+mode = "thumb"
+note = "Audio callback island bx-lr leaf"
+
+[[extra_func]]
+addr = 0x0800ECA4
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800ECB4
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800ECD0
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800ECE0
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800ECFC
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800ED0C
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800ED1C
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800ED38
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800ED48
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800ED58
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800ED74
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800ED90
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800EDA0
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800EDAC
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800EDBC
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800EDCC
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800EDDC
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800EDEC
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800EDFC
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800EE0C
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800EE18
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800EE24
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800EE34
+mode = "thumb"
+note = "Audio callback island leaf"
+
+[[extra_func]]
+addr = 0x0800EE44
+mode = "thumb"
+note = "Audio callback island leaf"
+
+# Additional address-taken callbacks observed during standalone boot.
+[[extra_func]]
+addr = 0x0800DF60
+mode = "thumb"
+note = "Runtime-observed callback root; audited Thumb body"
+
+[[extra_func]]
+addr = 0x0800DFC0
+mode = "thumb"
+note = "Runtime-observed callback root; audited Thumb body"
+
+[[extra_func]]
+addr = 0x0800DFEE
+mode = "thumb"
+note = "Runtime-observed callback root; audited Thumb body"
+
+[[extra_func]]
+addr = 0x0800E00A
+mode = "thumb"
+note = "Runtime-observed callback root; audited Thumb body"
+
+[[extra_func]]
+addr = 0x0800F354
+mode = "thumb"
+note = "Runtime-observed Thumb bx-lr callback"
+
+[[extra_func]]
+addr = 0x0800F330
+mode = "thumb"
+note = "Runtime-observed gameplay no-op callback in helper leaf island; audited bx-lr"
+
+[[extra_func]]
+addr = 0x0800F31C
+mode = "thumb"
+note = "Audited address-taken helper-table callback; literal load followed by push {r3,lr}"
+
+[[extra_func]]
+addr = 0x0800F334
+mode = "thumb"
+note = "Audited address-taken helper-table reset leaf after aligned padding"
+
+[[extra_func]]
+addr = 0x0800F340
+mode = "thumb"
+note = "Audited address-taken helper-table binary callback after aligned literal"
+
+[[extra_func]]
+addr = 0x0800F39C
+mode = "thumb"
+note = "Audited address-taken helper-table dispatcher after prior bx-lr"
+
+[[extra_func]]
+addr = 0x0800F3AC
+mode = "thumb"
+note = "Runtime-observed Thumb bx-lr callback"
+
+[[extra_func]]
+addr = 0x0800F3B0
+mode = "thumb"
+note = "Audited helper-table zero predicate leaf"
+
+[[extra_func]]
+addr = 0x0800F3B4
+mode = "thumb"
+note = "Audited helper-table no-op leaf"
+
+[[extra_func]]
+addr = 0x0800F3B8
+mode = "thumb"
+note = "Audited helper-table no-op leaf"
+
+[[extra_func]]
+addr = 0x0800F3C0
+mode = "thumb"
+note = "Audited helper-table zero predicate leaf"
+
+[[extra_func]]
+addr = 0x080096B4
+mode = "thumb"
+note = "IRQ callback pointer loaded from 0x03003B88; audited push {r4,lr} root"
+
+[[extra_func]]
+addr = 0x08000314
+mode = "thumb"
+note = "Address-taken startup/state initializer; audited push {r3-r5,lr} root"
+
+[[extra_func]]
+addr = 0x08000386
+mode = "thumb"
+note = "Address-taken startup fade callback; audited standalone Thumb leaf"
+
+[[extra_func]]
+addr = 0x080003B4
+mode = "thumb"
+note = "Address-taken startup transition callback; audited push {r4,lr} root"
+
+[[extra_func]]
+addr = 0x08008AA6
+mode = "thumb"
+note = "IRQ-installed sound callback after the preceding bx-lr; audited literal-load root"
+
+[[extra_func]]
+addr = 0x08008AA4
+mode = "thumb"
+note = "IRQ-installed no-op callback; standalone bx-lr leaf"
+
+[[extra_func]]
+addr = 0x0800A092
+mode = "thumb"
+note = "Address-taken object countdown callback after adjacent bx-lr leaf"
+
+[[extra_func]]
+addr = 0x0800CF92
+mode = "thumb"
+note = "Address-taken scene callback after adjacent no-op leaves; audited push {r4-r6,lr} root"
+
+[[extra_func]]
+addr = 0x080047AC
+mode = "thumb"
+note = "Address-taken scene initializer after aligned literals; audited push {r3-r5,lr} root"
+
+[[extra_func]]
+addr = 0x08004832
+mode = "thumb"
+note = "Address-taken scene task after prior pop; audited push {r4-r7,lr} root"
+
+# Complete distinct target set for the 15-entry byte-offset switch table at
+# 0x08004698 (`target = table_base + entry * 2`).
+[[extra_func]]
+addr = 0x080046A8
+mode = "thumb"
+resume = true
+note = "Byte-offset switch case target"
+
+[[extra_func]]
+addr = 0x080046C8
+mode = "thumb"
+resume = true
+note = "Byte-offset switch case target"
+
+[[extra_func]]
+addr = 0x080046D2
+mode = "thumb"
+resume = true
+note = "Byte-offset switch case target"
+
+[[extra_func]]
+addr = 0x080046DC
+mode = "thumb"
+resume = true
+note = "Byte-offset switch case target"
+
+[[extra_func]]
+addr = 0x080046E6
+mode = "thumb"
+resume = true
+note = "Byte-offset switch case target"
+
+[[extra_func]]
+addr = 0x08004702
+mode = "thumb"
+resume = true
+note = "Byte-offset switch case target"
+
+[[extra_func]]
+addr = 0x0800470A
+mode = "thumb"
+resume = true
+note = "Byte-offset switch shared case target"
+
+[[extra_func]]
+addr = 0x0800470C
+mode = "thumb"
+resume = true
+note = "Byte-offset switch case target"
+
+[[extra_func]]
+addr = 0x080048FA
+mode = "thumb"
+note = "Address-taken scene completion callback after prior pop; audited push {r4,lr} root"
+
+# Runtime-observed attract/demo callbacks. Interior self-heal PCs from these
+# bodies are covered by static_resume_all; only genuine ROM function roots are
+# seeded here.
+[[extra_func]]
+addr = 0x08001E90
+mode = "thumb"
+note = "Attract scene initializer after aligned data; audited push {r3,lr} root"
+
+[[extra_func]]
+addr = 0x08001F04
+mode = "thumb"
+note = "Attract scene update callback after prior pop; audited push {r4,lr} root"
+
+[[extra_func]]
+addr = 0x08001F2A
+mode = "thumb"
+note = "Attract scene completion callback after prior pop; audited push {r3,lr} root"
+
+[[extra_func]]
+addr = 0x08008D14
+mode = "thumb"
+note = "Address-taken audio/object initializer after string data; audited ldrb root"
+
+[[extra_func]]
+addr = 0x08008D8A
+mode = "thumb"
+note = "Address-taken audio/object setter after prior pop; audited register-move root"
+
+[[extra_func]]
+addr = 0x08008E06
+mode = "thumb"
+note = "Address-taken audio/object update callback; audited push {r4-r6,lr} root"
+
+[[extra_func]]
+addr = 0x0800946E
+mode = "thumb"
+note = "Address-taken object copy callback; audited push {r4,lr} root"
+
+[[extra_func]]
+addr = 0x08009484
+mode = "thumb"
+note = "Address-taken object-list callback; audited push {r4-r7,lr} root"
+
+[[extra_func]]
+addr = 0x08009BA6
+mode = "thumb"
+note = "Address-taken object-state callback after prior pop; audited load/store leaf"
+
+[[extra_func]]
+addr = 0x0800A0E4
+mode = "thumb"
+note = "Address-taken no-op bx-lr callback"
+
+[[extra_func]]
+addr = 0x0800A0E6
+mode = "thumb"
+note = "Address-taken object countdown wrapper; audited push {lr} root"
+
+[[extra_func]]
+addr = 0x0800CF8E
+mode = "thumb"
+note = "Address-taken no-op callback; audited movs/bx-lr leaf"
+
+[[extra_func]]
+addr = 0x0800CFB6
+mode = "thumb"
+note = "Address-taken scene predicate; audited push {lr} root"
+
+[[extra_func]]
+addr = 0x0800CFD2
+mode = "thumb"
+note = "Address-taken scene predicate after prior pop; audited push {lr} root"
+
+[[extra_func]]
+addr = 0x0800CE80
+mode = "thumb"
+note = "Address-taken scene initializer after aligned literals; audited store/setup leaf"
+
+[[extra_func]]
+addr = 0x0800CE9C
+mode = "thumb"
+note = "Address-taken scene renderer after prior bx-lr; audited push {r4-r7} root"
+
+[[extra_func]]
+addr = 0x0800CF00
+mode = "thumb"
+note = "Address-taken countdown leaf after prior pop/bx-lr"
+
+[[extra_func]]
+addr = 0x0800CF10
+mode = "thumb"
+note = "Address-taken scene setup callback after prior bx-lr; audited push {r4-r6,lr} root"
+
+[[extra_func]]
+addr = 0x0800F3BC
+mode = "thumb"
+note = "Address-taken no-op callback in helper leaf island; audited bx-lr"
+
+[[extra_func]]
+addr = 0x0800CF76
+mode = "thumb"
+note = "Address-taken scene countdown leaf after prior pop; audited load/store root"
+
+[[extra_func]]
+addr = 0x08000424
+mode = "thumb"
+note = "Address-taken main-menu initializer after aligned literals; audited push {r4-r7,lr} root"
+
+# Runtime-observed standalone gameplay callbacks. The self-heal proposal also
+# contained branch destinations and post-call continuations inside these
+# bodies; static_resume_all covers those once the genuine roots are seeded.
+[[extra_func]]
+addr = 0x0800051A
+mode = "thumb"
+note = "Address-taken menu/game transition callback after prior pop; audited push {r4,lr} root"
+
+[[extra_func]]
+addr = 0x08000554
+mode = "thumb"
+note = "Address-taken transition/input callback after prior pop; audited push {r4,lr} root"
+
+[[extra_func]]
+addr = 0x08000EBC
+mode = "thumb"
+note = "Address-taken palette transition callback after aligned literals; audited push {r4-r7,lr} root"
+
+[[extra_func]]
+addr = 0x08000F58
+mode = "thumb"
+note = "Address-taken resource release callback after prior pop; audited push {r3,lr} root"
+
+[[extra_func]]
+addr = 0x08000F6C
+mode = "thumb"
+note = "Address-taken transition predicate after prior pop; audited push {r4,lr} root"
+
+[[extra_func]]
+addr = 0x08000FE8
+mode = "thumb"
+note = "Address-taken fade update callback after prior pop; audited push {r4,lr} root"
+
+[[extra_func]]
+addr = 0x08000FA4
+mode = "thumb"
+note = "Address-taken transition initializer after aligned literal; audited push {r4,lr} root"
+
+[[extra_func]]
+addr = 0x08001008
+mode = "thumb"
+note = "Address-taken transition completion callback after prior pop; audited push {r4,lr} root"
+
+[[extra_func]]
+addr = 0x08001212
+mode = "thumb"
+note = "Address-taken main gameplay loop callback after no-op leaf; audited push {r3,lr} root"
+
+[[extra_func]]
+addr = 0x080022BA
+mode = "thumb"
+note = "Address-taken gameplay subsystem update callback after prior bx-lr; audited push {r3,lr} root"
+
+[[extra_func]]
+addr = 0x080026F8
+mode = "thumb"
+note = "Address-taken entity-list callback after no-op leaves; audited push {r3-r5,lr} root"
+
+[[extra_func]]
+addr = 0x08002896
+mode = "thumb"
+note = "Address-taken tile upload callback after prior pop; audited push {r3,lr} root"
+
+[[extra_func]]
+addr = 0x08005B38
+mode = "thumb"
+note = "Address-taken animated-tile callback after aligned literals; audited push {r3-r7,lr} root"
+
+[[extra_func]]
+addr = 0x08008016
+mode = "thumb"
+note = "Address-taken world update callback at branch join; audited ldr/push root"
+
+[[extra_func]]
+addr = 0x08009328
+mode = "thumb"
+note = "Address-taken text/HUD update callback after prior pop; audited push {r4-r7,lr} root"
+
+[[extra_func]]
+addr = 0x0800D3B8
+mode = "thumb"
+note = "Address-taken overworld renderer callback after prior pop; audited push {r0,r4-r7,lr} root"
+
+[[extra_func]]
+addr = 0x0800D966
+mode = "thumb"
+note = "Address-taken scroll-state initializer after prior pop; audited load/store bx-lr leaf"
+
+[[extra_func]]
+addr = 0x0800D97E
+mode = "thumb"
+note = "Address-taken tile upload wrapper after prior bx-lr; audited push {r3,lr} root"
+
+[[extra_func]]
+addr = 0x0800DDC4
+mode = "thumb"
+note = "Address-taken particle-state initializer after prior pop; audited load/store bx-lr leaf"
+
+[[extra_func]]
+addr = 0x0800DDE0
+mode = "thumb"
+note = "Address-taken particle renderer after prior bx-lr; audited push {r0,r4-r7,lr} root"
