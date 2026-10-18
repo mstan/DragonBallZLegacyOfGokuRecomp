@@ -620,3 +620,412 @@ note = "Address-taken particle-state initializer after prior pop; audited load/s
 addr = 0x0800DDE0
 mode = "thumb"
 note = "Address-taken particle renderer after prior bx-lr; audited push {r0,r4-r7,lr} root"
+
+# ---- Gameplay coverage additions (LoG I cheat sweep, 2026-10-17) ----
+# Dispatch misses from a timeboxed cheat sweep (new game, Kame House, pause menu, buttons)
+# under validation-only cheats. Each extra_func is a verified entry (push{..lr} /
+# STMFD prologue, BL target, or ROM code pointer). Each jump_table is a bounded run
+# of ROM code pointers whose members are all verified function starts.
+
+[[jump_table]]
+addr = 0x08011424
+stride = 4
+count = 15
+format = "abs32"
+entries_mode = "auto"
+note = "Verified ROM function-pointer table, 15 entries; reached in gameplay sweep"
+
+[[jump_table]]
+addr = 0x08166A84
+stride = 4
+count = 10
+format = "abs32"
+entries_mode = "auto"
+note = "Verified ROM function-pointer table, 10 entries; reached in gameplay sweep"
+
+[[jump_table]]
+addr = 0x08166BAC
+stride = 4
+count = 5
+format = "abs32"
+entries_mode = "auto"
+note = "Verified ROM function-pointer table, 5 entries; reached in gameplay sweep"
+
+[[jump_table]]
+addr = 0x08166BD4
+stride = 4
+count = 5
+format = "abs32"
+entries_mode = "auto"
+note = "Verified ROM function-pointer table, 5 entries; reached in gameplay sweep"
+
+[[jump_table]]
+addr = 0x081C7AA8
+stride = 4
+count = 10
+format = "abs32"
+entries_mode = "auto"
+note = "Verified ROM function-pointer table, 10 entries; reached in gameplay sweep"
+
+[[jump_table]]
+addr = 0x081C7B14
+stride = 4
+count = 15
+format = "abs32"
+entries_mode = "auto"
+note = "Verified ROM function-pointer table, 15 entries; reached in gameplay sweep"
+
+[[extra_func]]
+addr = 0x08001208
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08001210
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (rom code pointer)"
+
+[[extra_func]]
+addr = 0x080012EC
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08001390
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x0800146A
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x0800162A
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08001690
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x080017E6
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08001874
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08001A04
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08001A50
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08001A9E
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08001AC4
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08001CFA
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08001D52
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08003032
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x0800356C
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (rom code pointer)"
+
+[[extra_func]]
+addr = 0x08003B74
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08003BA4
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08003BFE
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x0800426E
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x080049D4
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x080049FC
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08004A1C
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (rom code pointer)"
+
+[[extra_func]]
+addr = 0x08004B60
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08004B88
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08004BA8
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x080055A0
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x080055C4
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (rom code pointer)"
+
+[[extra_func]]
+addr = 0x080057A8
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08005D04
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08006038
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08006074
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08006278
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x080064A8
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x080064C8
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (rom code pointer)"
+
+[[extra_func]]
+addr = 0x08009C34
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (rom code pointer)"
+
+[[extra_func]]
+addr = 0x0800DABC
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x0800DADC
+mode = "thumb"
+note = "LoG I cheat sweep miss, verified entry (rom code pointer)"
+
+# ---- Gameplay coverage additions (cheat sweep round 2, 2026-10-17) ----
+# Aborted-bridge entries and replay misses from re-driving the sweep milestone states
+# under validation-only cheats. Each extra_func is a verified entry (push{..lr} /
+# STMFD prologue, BL target, or ROM code pointer). Each jump_table is a bounded run
+# of ROM code pointers whose members are all verified function starts.
+
+[[extra_func]]
+addr = 0x080061B0
+mode = "thumb"
+note = "cheat sweep round 2 miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x080061D0
+mode = "thumb"
+note = "cheat sweep round 2 miss, verified entry (push-lr prologue)"
+
+# ---- Gameplay coverage additions (LoG I sweep round 2, 2026-10-17) ----
+# Dispatch misses from sweep round 2 (button combos, NPC dialogue chains, pause subscreens)
+# under validation-only cheats. Each extra_func is a verified entry (push{..lr} /
+# STMFD prologue, BL target, or ROM code pointer). Each jump_table is a bounded run
+# of ROM code pointers whose members are all verified function starts.
+
+
+
+[[jump_table]]
+addr = 0x081C7AD4
+stride = 4
+count = 4
+format = "abs32"
+entries_mode = "auto"
+note = "Verified ROM function-pointer table, 4 entries; reached in gameplay sweep"
+
+[[jump_table]]
+addr = 0x085443A0
+stride = 4
+count = 10
+format = "abs32"
+entries_mode = "auto"
+note = "Verified ROM function-pointer table, 10 entries; reached in gameplay sweep"
+
+[[extra_func]]
+addr = 0x0800124C
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x080014CE
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (start after terminator/literal pool, no local branch to it)"
+
+[[extra_func]]
+addr = 0x080014DC
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (start after terminator/literal pool, no local branch to it)"
+
+[[extra_func]]
+addr = 0x080014EA
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (start after terminator/literal pool, no local branch to it)"
+
+[[extra_func]]
+addr = 0x080014F8
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (rom code pointer)"
+
+[[extra_func]]
+addr = 0x08001506
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (start after terminator/literal pool, no local branch to it)"
+
+[[extra_func]]
+addr = 0x0800150E
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (start after terminator/literal pool, no local branch to it)"
+
+[[extra_func]]
+addr = 0x0800151C
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08001708
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (rom code pointer)"
+
+[[extra_func]]
+addr = 0x08002552
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (rom code pointer)"
+
+[[extra_func]]
+addr = 0x080049B4
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08004A1E
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08004B40
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08004E4E
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08004E76
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08004E80
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08005380
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x0800538A
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08005392
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x080055C6
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08006018
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x0800B260
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (start after terminator/literal pool, no local branch to it)"
+
+[[extra_func]]
+addr = 0x0800B2CC
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (start after terminator/literal pool, no local branch to it)"
+
+[[extra_func]]
+addr = 0x0800D1E6
+mode = "thumb"
+note = "LoG I sweep round 2 miss, verified entry (host of 2 observed interior resume point(s), 2 post-BL)"
