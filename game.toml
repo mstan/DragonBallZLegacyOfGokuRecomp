@@ -31,7 +31,7 @@ sha1 = "a3c8c76742f11fc6a3f6e3fcca20992458cac0b5"
 
 [save]
 type = "eeprom"
-size = 8192
+size = 512
 path = "saves/dragon_ball_z_the_legacy_of_goku_usa.sav"
 
 [runtime]
@@ -662,10 +662,10 @@ note = "Verified ROM function-pointer table, 5 entries; reached in gameplay swee
 [[jump_table]]
 addr = 0x081C7AA8
 stride = 4
-count = 10
+count = 15
 format = "abs32"
 entries_mode = "auto"
-note = "Verified ROM function-pointer table, 10 entries; reached in gameplay sweep"
+note = "Verified ROM function-pointer table, 15 entries; reached in gameplay sweep"
 
 [[jump_table]]
 addr = 0x081C7B14
@@ -894,13 +894,6 @@ note = "cheat sweep round 2 miss, verified entry (push-lr prologue)"
 
 
 
-[[jump_table]]
-addr = 0x081C7AD4
-stride = 4
-count = 4
-format = "abs32"
-entries_mode = "auto"
-note = "Verified ROM function-pointer table, 4 entries; reached in gameplay sweep"
 
 [[jump_table]]
 addr = 0x085443A0
@@ -1029,3 +1022,175 @@ note = "LoG I sweep round 2 miss, verified entry (start after terminator/literal
 addr = 0x0800D1E6
 mode = "thumb"
 note = "LoG I sweep round 2 miss, verified entry (host of 2 observed interior resume point(s), 2 post-BL)"
+
+# ---- Gameplay coverage additions (LoG I warp sweep, 2026-10-17) ----
+# Dispatch misses from the warp sweep (all 42 maps, early and late-game save, quest-flag variants)
+# under validation-only cheats. Each extra_func is a verified entry (push{..lr} /
+# STMFD prologue, BL target, or ROM code pointer). Each jump_table is a bounded run
+# of ROM code pointers whose members are all verified function starts.
+
+[[jump_table]]
+addr = 0x08166AC0
+stride = 4
+count = 4
+format = "abs32"
+entries_mode = "auto"
+note = "Verified ROM function-pointer table, 4 entries; reached in gameplay sweep"
+
+[[jump_table]]
+addr = 0x08166AF0
+stride = 4
+count = 7
+format = "abs32"
+entries_mode = "auto"
+note = "Verified ROM function-pointer table, 7 entries; reached in gameplay sweep"
+
+[[jump_table]]
+addr = 0x08166B50
+stride = 4
+count = 4
+format = "abs32"
+entries_mode = "auto"
+note = "Verified ROM function-pointer table, 4 entries; reached in gameplay sweep"
+
+
+[[extra_func]]
+addr = 0x08000E5E
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (start after terminator/literal pool, no local branch to it)"
+
+[[extra_func]]
+addr = 0x080017B6
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08001A8C
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x080042B4
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08004AB0
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (rom code pointer)"
+
+[[extra_func]]
+addr = 0x08004BCA
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x080051B4
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08005604
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08005840
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x0800599A
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08005FAC
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (rom code pointer)"
+
+[[extra_func]]
+addr = 0x08006214
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (rom code pointer)"
+
+[[extra_func]]
+addr = 0x08006244
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (host of 1 observed interior resume point(s), 1 post-BL)"
+
+[[extra_func]]
+addr = 0x0800636C
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x0800689A
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (host of 1 observed interior resume point(s), 1 post-BL)"
+
+[[extra_func]]
+addr = 0x08007760
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (start after terminator/literal pool, no local branch to it)"
+
+[[extra_func]]
+addr = 0x08007786
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (start after terminator/literal pool, no local branch to it)"
+
+[[extra_func]]
+addr = 0x08007822
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (start after terminator/literal pool, no local branch to it)"
+
+[[extra_func]]
+addr = 0x0800B110
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x0800B644
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x0800C060
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x0800C090
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x0800C0EA
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x0800D03C
+mode = "thumb"
+note = "LoG I warp sweep miss, verified entry (host of 2 observed interior resume point(s), 2 post-BL)"
+
+# ---- Gameplay coverage additions (alias-only recheck, 2026-10-17) ----
+# Function entries previously seen only as resume aliases of a prior host shape
+# under validation-only cheats. Each extra_func is a verified entry (push{..lr} /
+# STMFD prologue, BL target, or ROM code pointer). Each jump_table is a bounded run
+# of ROM code pointers whose members are all verified function starts.
+
+[[extra_func]]
+addr = 0x08001B5C
+mode = "thumb"
+note = "alias-only recheck miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08001B8E
+mode = "thumb"
+note = "alias-only recheck miss, verified entry (push-lr prologue)"
+
+[[extra_func]]
+addr = 0x08001C04
+mode = "thumb"
+note = "alias-only recheck miss, verified entry (push-lr prologue)"
