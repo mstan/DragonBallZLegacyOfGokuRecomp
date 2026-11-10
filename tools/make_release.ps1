@@ -114,7 +114,10 @@ $mods = Join-Path $build 'mods'
 if (-not (Test-Path -LiteralPath (Join-Path $mods 'packages'))) {
     throw "Preloaded mod catalog is missing: $mods"
 }
-Copy-Item -LiteralPath $mods -Destination $stage -Recurse
+# Package the immutable shipped catalog. A developer/QA run can create a
+# state.toml beside the build's packages; player selections never ship.
+Copy-Item -LiteralPath (Join-Path $root 'mods/preloaded') `
+    -Destination (Join-Path $stage 'mods') -Recurse
 
 Copy-Item -LiteralPath (Join-Path $root 'LICENSE') -Destination $stage
 $notices = Join-Path $stage 'licenses'
