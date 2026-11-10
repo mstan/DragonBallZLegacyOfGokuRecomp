@@ -15,6 +15,10 @@ own legally obtained dumps.
 
 ## Status
 
+Windows v0.0.4 refreshes the shared runtime menu: its panel, text and controls
+scale with larger game windows, including high-resolution laptop displays.
+The menu retains the existing layout in ordinary and small windows.
+
 The USA release boots through its attract sequence and into gameplay. Adaptive
 view has been validated at native 240-pixel width and representative 320-,
 390-, and 480-pixel widths. The initial `v0.0.1` build is an experimental
@@ -34,14 +38,15 @@ launcher on boot** if you want later launches to go directly into the game.
 
 ## Included mod
 
-**Legacy of Goku Adaptive Widescreen** is optional and disabled by default. It
+**Legacy of Goku Adaptive Widescreen** is enabled by default for fresh setups. It
 expands the HUD and overworld as the window is resized, up to a 480×160 logical
 view, using authored overworld continuation and widened actor and prop
 clipping. It does not stretch the original image or change gameplay
 coordinates.
 
-The faithful 240×160 presentation remains available unchanged. Open the
-launcher's **Mods** page to enable the enhancement.
+The faithful 240×160 presentation remains available unchanged. Use the
+launcher's **Mods** page to disable the enhancement. Existing saved choices
+are preserved when updating.
 
 ## Features
 
@@ -78,6 +83,9 @@ cd DragonBallZLegacyOfGokuRecomp
 
 cmake -S gbarecomp -B gbarecomp/build -G Ninja
 cmake --build gbarecomp/build --target gba_recompile
+gbarecomp/build/gba_recompile --bios path/to/gba_bios.bin `
+  --config gbarecomp/bios/gba_bios.toml `
+  --out gbarecomp/src/runtime/generated_bios
 pwsh tools/regen.ps1
 cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build build --target DragonBallZLegacyOfGokuRecomp

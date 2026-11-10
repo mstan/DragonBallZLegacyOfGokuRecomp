@@ -13,6 +13,7 @@ param(
     [Parameter(Mandatory = $true)][string]$Version,
     [string]$BuildDir = 'build-release',
     [string]$GbarecompRoot = '',
+    [string]$RecompUiRoot = '',
     [ValidateRange(1, 32)][int]$Jobs = 4
 )
 
@@ -27,6 +28,8 @@ $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $root = (Resolve-Path (Join-Path $scriptDir '..')).Path
 if (-not $GbarecompRoot) { $GbarecompRoot = Join-Path $root 'gbarecomp' }
 $engine = (Resolve-Path $GbarecompRoot).Path
+if (-not $RecompUiRoot) { $RecompUiRoot = Join-Path $root 'recomp-ui' }
+$ui = (Resolve-Path $RecompUiRoot).Path
 $build = Join-Path $root $BuildDir
 $out = Join-Path $root 'release-stage'
 $target = 'DragonBallZLegacyOfGokuRecomp'
@@ -69,6 +72,8 @@ New-Item -ItemType Directory -Force -Path $out | Out-Null
     -DCMAKE_BUILD_TYPE=Release `
     "-DCMAKE_CXX_FLAGS_RELEASE=-O1 -DNDEBUG" `
     -DGBARECOMP_ROOT="$engine" `
+    -DRECOMP_UI_ROOT="$ui" `
+    -DGBARECOMP_RUNTIME_UI_ROOT="$ui" `
     -DGBARECOMP_BUILD_ORACLE=OFF `
     -DGBARECOMP_MINGW_PREFIX_UNIX='/c/msys64/mingw64' `
     -DSDL2_INCLUDE_DIR='C:/msys64/mingw64/include/SDL2' `
@@ -111,6 +116,37 @@ if (-not (Test-Path -LiteralPath (Join-Path $mods 'packages'))) {
 }
 Copy-Item -LiteralPath $mods -Destination $stage -Recurse
 
+Copy-Item -LiteralPath (Join-Path $root 'LICENSE') -Destination $stage
+$notices = Join-Path $stage 'licenses'
+New-Item -ItemType Directory -Path $notices | Out-Null
+foreach ($notice in @(
+    @((Join-Path $engine 'LICENSE'), 'gbarecomp-LICENSE.txt'),
+    @((Join-Path $engine 'external/arm-recomp-core/LICENSE'), 'arm-recomp-core-LICENSE.txt'),
+    @((Join-Path $ui 'LICENSE'), 'recomp-ui-LICENSE.txt'),
+    @((Join-Path $ui 'src/third_party/imgui/LICENSE.txt'), 'imgui-LICENSE.txt'),
+    @((Join-Path $mingwBin '../share/licenses/SDL2/LICENSE.txt'), 'SDL2-LICENSE.txt'),
+    @((Join-Path $mingwBin '../share/licenses/gcc-libs/COPYING.RUNTIME'), 'GCC-COPYING.RUNTIME.txt'),
+    @((Join-Path $mingwBin '../share/licenses/gcc-libs/COPYING3'), 'GCC-COPYING3.txt'),
+    @((Join-Path $mingwBin '../share/licenses/gcc-libs/COPYING.LIB'), 'GCC-COPYING.LIB.txt')
+)) {
+    Copy-Item -LiteralPath $notice[0] -Destination (Join-Path $notices $notice[1])
+}
+$titleRevision = (& git -C $root rev-parse HEAD).Trim()
+$engineRevision = (& git -C $engine rev-parse HEAD).Trim()
+$uiRevision = (& git -C $ui rev-parse HEAD).Trim()
+@"
+Dragon Ball Z: The Legacy of Goku Recomp v$Version
+Title: https://github.com/mstan/DragonBallZLegacyOfGokuRecomp at $titleRevision
+Engine: https://github.com/mstan/gbarecomp at $engineRevision
+Shared UI: https://github.com/RetroPortingToolKit/recomp-ui at $uiRevision
+Windows x64 Release, MinGW-w64, SDL2; generated game sources use -O1 -g0.
+Use the pinned submodules, tools/regen.ps1 and tools/make_release.ps1.
+The retail BIOS must be generated with the engine's bios/gba_bios.toml config.
+ROMs, BIOS dumps, generated guest source and saves are not distributed.
+Native game saves and explicit player settings are preserved when updating.
+Execution save states are build-specific.
+"@ | Out-File -LiteralPath (Join-Path $stage 'SOURCE.txt') -Encoding utf8
+
 & (Join-Path $engine 'tools\fetch_tcc.ps1') `
     -Toolchain (Join-Path $stage 'overlay_toolchain') -EngineRoot $engine
 if ($LASTEXITCODE -ne 0) { throw "Overlay toolchain staging failed ($LASTEXITCODE)." }
@@ -119,7 +155,7 @@ if ($LASTEXITCODE -ne 0) { throw "Overlay toolchain staging failed ($LASTEXITCOD
 # $gameTitle - GBA static recompilation (Windows x64)
 
 This v$Version preview runs the USA retail game through gbarecomp with a
-recomp-ui launcher and an optional Adaptive Widescreen mod.
+recomp-ui launcher and an Adaptive Widescreen mod enabled for fresh setups.
 
 This experimental build is a byproduct of developing and testing gbarecomp.
 It has no affiliation with or endorsement from the game publisher.
@@ -132,7 +168,10 @@ It has no affiliation with or endorsement from the game publisher.
 3. Select your legally obtained $gameTitle (USA) ROM.
    Expected SHA-1: $expectedSha1
 4. Select your legally obtained retail gba_bios.bin under Settings > System.
-5. Open Mods to opt into Adaptive Widescreen, then select PLAY.
+5. Select PLAY. Adaptive Widescreen follows the window; use Mods to disable it.
+
+The in-game settings menu scales its panel, text and controls with larger
+windows. Existing explicit aspect/mod choices are preserved when updating.
 
 Display, audio, input, and enhancement settings persist locally. Keyboard
 defaults: arrows = D-pad, Z = A, X = B, Enter = Start, Backspace = Select,

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(DragonBallZLegacyOfGokuRecomp C CXX)
+project(DragonBallZLegacyOfGokuRecomp VERSION 0.0.4 LANGUAGES C CXX)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 20)
@@ -88,6 +88,10 @@ endif()
 
 set(LEGACY_PRELOADED_MODS "${CMAKE_CURRENT_SOURCE_DIR}/mods/preloaded")
 if(EXISTS "${LEGACY_PRELOADED_MODS}/packages")
+    file(GLOB_RECURSE LEGACY_MOD_MANIFESTS CONFIGURE_DEPENDS
+        "${LEGACY_PRELOADED_MODS}/packages/*.toml")
+    set_property(TARGET DragonBallZLegacyOfGokuRecomp APPEND PROPERTY
+        LINK_DEPENDS ${LEGACY_MOD_MANIFESTS})
     add_custom_command(TARGET DragonBallZLegacyOfGokuRecomp POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
             "${LEGACY_PRELOADED_MODS}"
