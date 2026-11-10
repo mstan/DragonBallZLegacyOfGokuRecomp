@@ -50,9 +50,9 @@ std::uint16_t ewram16(gba::GbaBus* bus, std::uint32_t address) {
 }
 
 bool is_overworld(gba::GbaBus* bus) {
-    if (!bus || !g_ws_active) return false;
+    if (!bus) return false;
     const std::uint16_t dispcnt = bus->io().read16(0x000u);
-    if ((dispcnt & 7u) != 0u || (dispcnt & 0x1F40u) != 0x1F40u)
+    if ((dispcnt & 0x1FC7u) != 0x1F40u)
         return false;
 
     // The standalone game assigns the HUD to BG0/screen block 28 and the
@@ -113,7 +113,7 @@ void resolve_field_camera(gba::GbaBus* bus, int screen_y) {
     if (!new_frame) return;
 
     g_field.valid = false;
-    if (!is_overworld(bus)) return;
+    if (!g_ws_active || !is_overworld(bus)) return;
 
     const int phase_x = bus->io().read16(0x014u) & 7;
     const int phase_y = bus->io().read16(0x016u) & 7;
@@ -167,7 +167,7 @@ void resolve_field_camera(gba::GbaBus* bus, int screen_y) {
 extern "C" int legacy_tilemap_provider(
     int bg, int hardware_x, int screen_y, std::uint16_t* out_entry) {
     gba::GbaBus* bus = active_bus();
-    if (!out_entry || bg < 1 || bg > 3 || !is_overworld(bus)) {
+    if (!out_entry || !g_ws_active || bg < 1 || bg > 3 || !is_overworld(bus)) {
         return gba::kWsTilemapUnavailable;
     }
     resolve_field_camera(bus, screen_y);
@@ -188,7 +188,7 @@ extern "C" int legacy_hud_obj_x_provider(
     int oam_index, std::uint16_t attr0, std::uint16_t attr1,
     std::uint16_t, int* out_x) {
     gba::GbaBus* bus = active_bus();
-    if (!out_x || !is_overworld(bus)) return 0;
+    if (!out_x || !g_ws_active || !is_overworld(bus)) return 0;
 
     const int x = attr1 & 0x1FFu;
     const int y = attr0 & 0xFFu;
@@ -250,6 +250,10 @@ extern "C" int legacy_view_rom_read16(
 }
 
 }  // namespace
+
+bool has_authored_view() {
+    return is_overworld(active_bus());
+}
 
 void install_extended_view(std::uint32_t, std::uint32_t) {
     g_field = {};

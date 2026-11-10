@@ -180,6 +180,12 @@ Display, audio, input, and enhancement settings persist locally. Keyboard
 defaults: arrows = D-pad, Z = A, X = B, Enter = Start, Backspace = Select,
 and Tab = fast-forward. Shift+F1-F9 saves a state; F1-F9 loads one.
 
+To report a gameplay bug, reproduce it in a short session and quit normally.
+The game records diagnostic replays in ``diagnostics/replays`` beside the
+executable. Keep the files with that session's prefix together, including
+the save and settings sidecars. For display bugs, also record the starting
+window size and the resize or fullscreen steps.
+
 The ROM and retail GBA BIOS are not included. Supply your own dumps.
 Interactive play has no implicit runtime step limit; only an explicit
 ``--steps`` option applies a deterministic upper bound.

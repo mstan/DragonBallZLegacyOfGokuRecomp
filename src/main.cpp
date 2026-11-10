@@ -39,6 +39,10 @@ int main(int argc, char** argv) {
     opts.max_resize_view_width = 480;
     opts.resize_driven_view = true;
     opts.extended_view_init = &legacy::install_extended_view;
+    opts.presentation_request = [](gbarecomp::RunOptions::PresentationRequest* request) {
+        request->native_view = !legacy::has_authored_view();
+        request->black_bars = request->native_view;
+    };
     opts.launcher_expose_widescreen = false;
     opts.launcher_expose_adaptive_view = false;
     opts.launcher_region = "USA";
