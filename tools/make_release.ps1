@@ -200,7 +200,8 @@ $forbidden = Get-ChildItem -LiteralPath $stage -Recurse -File | Where-Object {
         '.flash', '.state', '.json', '.log', '.apk') -or
     $relative -match '(^|\\)(generated|recomp_cache)(\\|$)' -or
     ($_.Extension -in @('.cpp', '.c', '.h') -and
-        $relative -notmatch '^overlay_toolchain\\') -or
+        $relative -notmatch '^overlay_toolchain\\' -and
+        $relative -ne 'external\arm-recomp-core\profiles\armv4t_gba\runtime_arm_types.h') -or
     $_.Name -ieq 'gba_bios.bin' -or
     $_.Name -in @('game.toml', 'rom.cfg', 'bios.cfg', 'config.ini',
         'keybinds.ini', 'mods.ini', 'state.toml')
